@@ -2,6 +2,7 @@ package com.example.cotizacion;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,11 +20,21 @@ public class MainActivity extends AppCompatActivity {
         fetchDataBtn = (Button) findViewById(R.id.fetchDataBtn);
         fetchDataTxt = (TextView) findViewById(R.id.fetchDataTxt);
 
+
+        public void Register(View view){
+            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(this, "cotizaciones", null, 1);
+            SQLiteDatabase db = admin.getWritableDatabase();
+        }
+
+
         fetchDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FetchData process = new FetchData();
                 process.execute();
+
+
+
 
             }
         });
