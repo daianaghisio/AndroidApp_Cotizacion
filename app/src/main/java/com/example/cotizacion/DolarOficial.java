@@ -1,23 +1,48 @@
 package com.example.cotizacion;
 
-import java.util.Date;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class DolarOficial {
+
+/** This class represents "DolarOficial".
+ * @author Daiana Ghisio
+ */
+
+public class DolarOficial implements Parcelable {
 
     private int id;
     private double compra;
     private double venta;
-    private Date fecha;
+    private long fecha;
 
     public DolarOficial() {
     }
 
-    public DolarOficial(int id, double compra, double venta, Date fecha){
+    public DolarOficial(int id, double compra, double venta, long fecha){
         this.id=id;
         this.compra=compra;
         this.venta=venta;
         this.fecha=fecha;
     }
+
+    protected DolarOficial(Parcel in) {
+        id = in.readInt();
+        compra = in.readDouble();
+        venta = in.readDouble();
+        fecha = in.readLong();
+    }
+
+    public static final Creator<DolarOficial> CREATOR = new Creator<DolarOficial>() {
+        @Override
+        public DolarOficial createFromParcel(Parcel in) {
+            return new DolarOficial(in);
+        }
+
+        @Override
+        public DolarOficial[] newArray(int size) {
+            return new DolarOficial[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -43,11 +68,11 @@ public class DolarOficial {
         this.venta = venta;
     }
 
-    public Date getFecha() {
+    public long getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(long fecha) {
         this.fecha = fecha;
     }
 
@@ -59,5 +84,18 @@ public class DolarOficial {
                 ", venta=" + venta +
                 ", fecha=" + fecha +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeDouble(compra);
+        dest.writeDouble(venta);
+        dest.writeLong(fecha);
     }
 }

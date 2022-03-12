@@ -1,6 +1,9 @@
 package com.example.cotizacion;
 
+import android.content.Intent;
 import android.os.AsyncTask;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,12 +17,22 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * This class gives the application access to information from the internet.
+ * @author Daiana Ghisio
+ */
+
 public class FetchData extends AsyncTask<Void, Void, Void> {
 
 String data ="";
 String dataUrl = "https://www.dolarsi.com/api/api.php?type=valoresprincipales";
 String singleParsed="";
 String dataParsed="";
+
+Double compra = 0.00;
+Double venta = 0.00;
+long fecha = 65435789;
+
     @Override
     protected Void doInBackground(Void... voids) {
 
@@ -35,22 +48,34 @@ String dataParsed="";
                 line = bufferedReader.readLine();
                 data = data+line;
             }
-            JSONArray jsonArray = new JSONArray(data); //data es el String que contiene la informacion completa del Json
+            JSONArray jsonArray = new JSONArray(data); //"data" is a String that contains the complete information that comes from the Json
 
-            for (int i=0; i<jsonArray.length();i++){ //Nuestro array tiene 8 indices, los cuales contienen un objeto "casa" en cada uno de ellos
+            for (int i=0; i<jsonArray.length();i++){ //Our array has 8 indexes, each of one of them contain an object "casa"
 
-                    JSONObject jsonObject = (JSONObject) jsonArray.get(i); //jsonObject contiene a cada uno de los objetos "casa" pertenecientes a los diferentes indices
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(i); //this jsonObject gets "casa" from the array
 
-                 //para cada objeto "casa", creamos el objeto "atributes"
-                    JSONObject atributes = (JSONObject) jsonObject.get("casa"); //convierte a "casa" en objeto, antes solo lo convertia en String
+                 //for each "casa", we create the object "atributes" which turns "casa into an object, before it was only a string.
+                    JSONObject atributes = (JSONObject) jsonObject.get("casa");
 
-                //extraemos la informacion de nuestro interes:
+                // To extract the information we are interested on:
                     singleParsed = "Nombre: " + atributes.get("nombre") + "\n" + "Valor para la compra: " + atributes.get("compra") + "\n" + "Valor para la venta: " + atributes.get("venta");
                     dataParsed = dataParsed + singleParsed + "\n";
 
-
             }
+            //The information we need to SAVE (dolar oficial) comes from index 0:
+            JSONObject jsonObjectDO = (JSONObject) jsonArray.get(0);
+            JSONObject atributesDO = (JSONObject) jsonObjectDO.get("casa");
 
+            compra = (Double) atributesDO.get("compra");
+            venta = (Double) atributesDO.get("venta");
+           //generating current date:
+           long dbLong = System.currentTimeMillis();
+           fecha = dbLong;
+
+            Intent intent = new Intent();
+            intent.putExtra("compra", compra); // I'm sending these variables 1 by 1 to my MainActivity class
+             intent.putExtra("venta", venta);
+             intent.putExtra("fecha", fecha);
 
         }catch (MalformedURLException e){
             e.printStackTrace();
