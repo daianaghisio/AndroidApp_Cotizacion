@@ -9,24 +9,6 @@
     android:orientation="vertical"
     >
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_text"
-        android:textColor="@color/black"
-        android:textSize="20sp">
-      </EditText>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/search_result"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:padding="8dp"
-        android:id="@+id/guardadoEnDb">
-    </TextView>
 
     <Button
         android:id="@+id/fetchDataBtn"
@@ -38,22 +20,52 @@
         android:textSize="20sp">
     </Button>
 
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="180dp">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:backgroundTint="@color/white"
-        android:text="@string/button_text"
-        android:textColor="@color/black"
-        android:textSize="25sp"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:text="@string/data_shown"
+        android:textColor="@color/white"
+        android:textSize="20sp"
         android:padding="8dp"
         android:id="@+id/fetchDataTxt">
     </TextView>
     </ScrollView>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_text"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:id="@+id/editTextComponent">
+    </EditText>
 
+    <Button
+        android:id="@+id/searchBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="@string/search_btn"
+        android:textColor="@color/black"
+        android:textSize="20sp">
+    </Button>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/search_result"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:padding="8dp"
+        android:id="@+id/guardadoEnDb">
+    </TextView>
 
 
 </LinearLayout>

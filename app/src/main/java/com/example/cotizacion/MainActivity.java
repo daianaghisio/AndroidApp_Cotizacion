@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,8 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private Button fetchDataBtn;
+    private Button searchBtn;
+    private EditText editTextComp;
     public static TextView fetchDataTxt;
     public static TextView guardadoEnDb;
     public AdminSQLiteOpenHelper myDB;
@@ -32,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fetchDataBtn = (Button) findViewById(R.id.fetchDataBtn);
+        searchBtn = (Button) findViewById(R.id.searchBtn);
         fetchDataTxt = (TextView) findViewById(R.id.fetchDataTxt);
         myDB = new AdminSQLiteOpenHelper(this);
         guardadoEnDb = (TextView) findViewById(R.id.guardadoEnDb);
+        editTextComp = (EditText) findViewById(R.id.editTextComponent);
 
         Intent intent = this.getIntent();
 
@@ -48,21 +53,21 @@ public class MainActivity extends AppCompatActivity {
                 //-dollar official's prices information will be send to MainActivity (with parcelable)
 
 
-                Date hora = Calendar.getInstance().getTime();
-                String hora1 = new SimpleDateFormat("yyyy-MM-dd").format(hora);
+              Date fecha = Calendar.getInstance().getTime();
+              String fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(fecha);
 
 
                 //VARIABLES PROVISORIAS, deberian venir desde FetchData class
                 Double compra=0.01; //evidentemente el error esta en el envio de variables de una actividad a la otra
                 Double venta=0.02;
-                long fecha=1234;
+                //long fecha=1234;
 
 
                //Saving the received variables into a new DolarOficial object:
                 DolarOficial dolarOficial = new DolarOficial();
                 dolarOficial.setCompra(compra); //El ERROR salta aca y ES PORQUE NO LLEGAN LOS DATOS A ESTA CLASE
                 dolarOficial.setVenta(venta);
-                dolarOficial.setFecha(fecha);
+              dolarOficial.setFecha(fecha1);
 
 
 
@@ -75,16 +80,29 @@ public class MainActivity extends AppCompatActivity {
                }
 
 
+            }
+        }); //first onClickListener ends
 
-                //The following receives "fecha" and returns search results:
-               DolarOficial guardadoEnDb = myDB.getDolarOficial(1234);
 
-               //La informacion sobre HORA que aparece en el siguiente String fue solo introducida para probar tipos de fechas
-               String texto = "hora: "+ hora1 +"\n"+ "Compra: " + guardadoEnDb.getCompra() + "\n" + "Venta: " + guardadoEnDb.getVenta();
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+             String fechaBusqueda = editTextComp.getText().toString();
+
+
+                //The following receives from the user the string "fechaBusqueda" and returns an object with the search results:
+                DolarOficial guardadoEnDb = myDB.getDolarOficial(fechaBusqueda);
+
+                //Mostrar resultados:   //DEBERIA SER LIST VIEW
+                String texto = "Resultados de la busqueda por fecha: "+ fechaBusqueda +"\n"+ "Compra: " + guardadoEnDb.getCompra() + "\n" + "Venta: " + guardadoEnDb.getVenta();
                 MainActivity.guardadoEnDb.setText(texto);
 
 
             }
-        });
-    }
-}
+        }); //second onClickListener ends
+
+
+
+    }//oncreate ends
+}//class ends

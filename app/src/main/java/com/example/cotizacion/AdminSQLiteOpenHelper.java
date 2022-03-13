@@ -66,19 +66,23 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
 
-    //method for getting(or reading) single DolarOficial object by "fecha"
+    //method for getting a single DolarOficial object by "fecha"
 
-    public DolarOficial getDolarOficial(long fecha){
+    public DolarOficial getDolarOficial(String fecha){ //changed long for string
 
+       //try catch agregar
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME, new String[]{COL_ID, COL_COMPRA,COL_VENTA, COL_FECHA}, "fecha" + "=?", new String[]{String.valueOf(fecha)}, null, null, null);
 
         if(cursor!=null){
             cursor.moveToFirst();
         }
-         DolarOficial dolarOf = new DolarOficial(cursor.getDouble(0), cursor.getDouble(1),cursor.getLong(2));
+         DolarOficial dolarOf = new DolarOficial(cursor.getDouble(0), cursor.getDouble(1),cursor.getString(2));
 
            return dolarOf;
     }
+
+
+    //method for reading all the saved objects
 
 }

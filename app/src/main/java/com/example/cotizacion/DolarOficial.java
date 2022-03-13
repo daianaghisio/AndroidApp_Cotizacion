@@ -13,12 +13,12 @@ public class DolarOficial implements Parcelable {
     private int id;
     private double compra;
     private double venta;
-    private long fecha;
+    private String fecha;
 
     public DolarOficial() {
     }
     private static int increment = 0;
-    public DolarOficial(double compra, double venta, long fecha){ //elimine id de parametros porque se lo asigno yo
+    public DolarOficial(double compra, double venta, String fecha){
         this.id=++increment;
         this.compra=compra;
         this.venta=venta;
@@ -29,7 +29,7 @@ public class DolarOficial implements Parcelable {
         id = in.readInt();
         compra = in.readDouble();
         venta = in.readDouble();
-        fecha = in.readLong();
+        fecha = in.readString();
     }
 
     public static final Creator<DolarOficial> CREATOR = new Creator<DolarOficial>() {
@@ -68,11 +68,11 @@ public class DolarOficial implements Parcelable {
         this.venta = venta;
     }
 
-    public long getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(long fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -96,6 +96,6 @@ public class DolarOficial implements Parcelable {
         dest.writeInt(id);
         dest.writeDouble(compra);
         dest.writeDouble(venta);
-        dest.writeLong(fecha);
+        dest.writeString(fecha);
     }
 }
