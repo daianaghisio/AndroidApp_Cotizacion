@@ -10,6 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * @author Daiana Ghisio
  */
@@ -42,18 +47,15 @@ public class MainActivity extends AppCompatActivity {
                 //-data will be shown
                 //-dollar official's prices information will be send to MainActivity (with parcelable)
 
-        //MAL  Double compra = intent.getParcelableExtra("compra");
-       //MAL   Double venta = intent.getParcelableExtra("venta");
 
-                //Creating current date:
-                long dbLong = System.currentTimeMillis();   //Date timestamp = new Date(dbLong)  --> TO RETRIEVE "FECHA"
-                //long fecha = dbLong;
+                Date hora = Calendar.getInstance().getTime();
+                String hora1 = new SimpleDateFormat("yyyy-MM-dd").format(hora);
 
+
+                //VARIABLES PROVISORIAS, deberian venir desde FetchData class
                 Double compra=0.01; //evidentemente el error esta en el envio de variables de una actividad a la otra
-                Double venta=0.02; //datos provisorios para probar el programa
-                long fecha=dbLong; //con estas variables provisorias FUNCIONA BIEN
-
-
+                Double venta=0.02;
+                long fecha=1234;
 
 
                //Saving the received variables into a new DolarOficial object:
@@ -74,17 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+                //The following receives "fecha" and returns search results:
+               DolarOficial guardadoEnDb = myDB.getDolarOficial(1234);
 
-                //Metodo provisorio para ver si me devuelve los datos buscando por FECHA:3456765
-               DolarOficial guardadoEnDb = myDB.getDolarOficial(3456765);
-                //NO VA A DEVOLVER NADA PORQUE ESTE METODO NO ESTA TERMINADO
-                //PUSE DEVOLVER NULL PARA QUE NO MARCARA EL ERROR ARRIBA PERO HAY QUE VER QUE LO PRODUCE
-
-               //Lo siguiente es para agregarlo a la VISTA
-                String texto =" fsdgdsgbsdh ";
-               // String texto = "Compra: " + guardadoEnDb.getCompra() + "\n" + "Venta: " + guardadoEnDb.getVenta();
-
-                MainActivity.guardadoEnDb.setText(texto); //Muestra correctamente el texto en la vista
+               //La informacion sobre HORA que aparece en el siguiente String fue solo introducida para probar tipos de fechas
+               String texto = "hora: "+ hora1 +"\n"+ "Compra: " + guardadoEnDb.getCompra() + "\n" + "Venta: " + guardadoEnDb.getVenta();
+                MainActivity.guardadoEnDb.setText(texto);
 
 
             }

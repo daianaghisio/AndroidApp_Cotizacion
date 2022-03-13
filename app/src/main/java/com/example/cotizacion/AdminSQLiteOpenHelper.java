@@ -71,16 +71,14 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper {
     public DolarOficial getDolarOficial(long fecha){
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, new String[]{COL_ID,COL_COMPRA,COL_VENTA,COL_FECHA}, "fecha" + "=?", new String[]{String.valueOf(fecha)}, null, null, null);
-        // ERROR: NOT SUCH TABLE cotizaciones in "SELECT ID, Compra, Venta, Fecha FROM cotizaciones WHERE fecha=?"
-        // el nombre de la tabla es DolarOficialTable, por eso estaba mal
+        Cursor cursor = db.query(TABLE_NAME, new String[]{COL_ID, COL_COMPRA,COL_VENTA, COL_FECHA}, "fecha" + "=?", new String[]{String.valueOf(fecha)}, null, null, null);
 
         if(cursor!=null){
             cursor.moveToFirst();
         }
-        // DolarOficial dolarOficial = new DolarOficial(Integer.parseInt(cursor.getString(0),cursor.getString(1), cursor.getString(2),cursor.getString(3)));
-        DolarOficial dolarOficial = null; //provisorio hasta encontrar el error arriba
-        return dolarOficial;
+         DolarOficial dolarOf = new DolarOficial(cursor.getDouble(0), cursor.getDouble(1),cursor.getLong(2));
+
+           return dolarOf;
     }
 
 }
