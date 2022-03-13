@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Cotizacion</string>
-    <string name="button_text">Ver</string>
+    <string name="button_text">Ver y almacenar datos</string>
+    <string name="search_result"> Resultado de busqueda </string>
+    <string name="hint_text">Write a date...</string>
 
 </resources>

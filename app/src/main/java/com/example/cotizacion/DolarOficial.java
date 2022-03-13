@@ -17,9 +17,9 @@ public class DolarOficial implements Parcelable {
 
     public DolarOficial() {
     }
-
-    public DolarOficial(int id, double compra, double venta, long fecha){
-        this.id=id;
+    private static int increment = 0;
+    public DolarOficial(double compra, double venta, long fecha){ //elimine id de parametros porque se lo asigno yo
+        this.id=++increment;
         this.compra=compra;
         this.venta=venta;
         this.fecha=fecha;

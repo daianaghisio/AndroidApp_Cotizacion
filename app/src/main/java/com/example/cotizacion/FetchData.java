@@ -66,8 +66,8 @@ long fecha = 65435789;
             JSONObject jsonObjectDO = (JSONObject) jsonArray.get(0);
             JSONObject atributesDO = (JSONObject) jsonObjectDO.get("casa");
 
-            compra = (Double) atributesDO.get("compra");
-            venta = (Double) atributesDO.get("venta");
+         //PROVISORIamente comentado porque marca error   compra = (Double) atributesDO.get("compra");
+         //CERRADO PROVISoriamente porque marca un error   venta = (Double) atributesDO.get("venta");
            //generating current date:
            long dbLong = System.currentTimeMillis();
            fecha = dbLong;
@@ -94,4 +94,6 @@ long fecha = 65435789;
         MainActivity.fetchDataTxt.setText(dataParsed);
         super.onPostExecute(unused);
     }
+
+
 }
