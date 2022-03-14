@@ -1,0 +1,16 @@
+
+Para los puntos 1 y 3 del ejercicio no tuve mayores problemas, y se encuentran funcionando correctamente.
+
+Punto 2: -Los valores son almacenados en la base de datos (use valores provisorios para poder probar el metodo)
+          Verifique esto con una extension de Firefox "SQLite Manager", que recibe el archivo de la base de datos de mi aplicacion, que obtengo de Device File Explorer
+
+Tareas pendientes para cerrar el punto 2:
+
+ - Envio de datos desde la clase Fetch.java a MainActivity.java 
+         	    (Investigue y probé "parcelable" pero necesito investigar más, 
+        	    puede que no haya funcionado en parte porque posteriormente 
+         	    descubrí que habia un error en FetchData.java guardando los valores
+        	    de "compra" y "venta" pertenecientes a Dolar Oficial en variables.)
+ - ListView o RecyclerView para mostrar toda la informacion almacenada en la base de datos. El método que retorna todos los 
+datos está creado, no llegué a verificar su funcionamiento. Mi idea es crear un RecyclerView de tres columnas, que va a recibir 
+un ArrayList al que le hayan sido agregados todos los atributos de todos los objetos recibidos de la base de datos.
