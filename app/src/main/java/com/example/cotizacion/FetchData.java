@@ -16,6 +16,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * This class gives the application access to information from the internet.
@@ -31,7 +34,7 @@ String dataParsed="";
 
 Double compra = 0.00;
 Double venta = 0.00;
-long fecha = 65435789;
+
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -54,28 +57,28 @@ long fecha = 65435789;
 
                     JSONObject jsonObject = (JSONObject) jsonArray.get(i); //this jsonObject gets "casa" from the array
 
-                 //for each "casa", we create the object "atributes" which turns "casa into an object, before it was only a string.
+                 //for each "casa", we create the object "atributes" which turns "casa" into an object, before it was only a string.
                     JSONObject atributes = (JSONObject) jsonObject.get("casa");
 
-                // To extract the information we are interested on:
+                // To display the information we are interested on:
                     singleParsed = "Nombre: " + atributes.get("nombre") + "\n" + "Valor para la compra: " + atributes.get("compra") + "\n" + "Valor para la venta: " + atributes.get("venta");
                     dataParsed = dataParsed + singleParsed + "\n";
 
             }
-            //The information we need to SAVE (dolar oficial) comes from index 0:
+            //The information we need to SAVE (dolar oficial) belongs to index 0:
             JSONObject jsonObjectDO = (JSONObject) jsonArray.get(0);
             JSONObject atributesDO = (JSONObject) jsonObjectDO.get("casa");
 
-         //PROVISORIamente comentado porque marca error   compra = (Double) atributesDO.get("compra");
-         //CERRADO PROVISoriamente porque marca un error   venta = (Double) atributesDO.get("venta");
-           //generating current date:
-           long dbLong = System.currentTimeMillis();
-           fecha = dbLong;
+   //The following lines are throwing an ERROR:
+         // String compra1 = (String) atributesDO.get("compra"); //obtain attribute (string)
+         //  compra = (Double) Double.valueOf(compra1); //turn into Double
 
-            Intent intent = new Intent();
-            intent.putExtra("compra", compra); // I'm sending these variables 1 by 1 to my MainActivity class
-             intent.putExtra("venta", venta);
-             intent.putExtra("fecha", fecha);
+         //  String venta1 = (String) atributesDO.get("venta");
+         //  venta = (Double) Double.valueOf(venta1);
+
+
+        /* TODO send variables to MainActivity.java */
+
 
         }catch (MalformedURLException e){
             e.printStackTrace();
@@ -84,10 +87,8 @@ long fecha = 65435789;
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return null;
     }
-
 
     @Override
     protected void onPostExecute(Void unused) {
