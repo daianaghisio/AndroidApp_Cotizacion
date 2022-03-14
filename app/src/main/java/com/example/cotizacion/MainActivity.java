@@ -1,6 +1,8 @@
 package com.example.cotizacion;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,13 +10,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Daiana Ghisio
@@ -26,8 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private Button searchBtn;
     private EditText editTextComp;
     public static TextView fetchDataTxt;
-    public static TextView guardadoEnDb;
+    public static TextView savedOnDb;
     public AdminSQLiteOpenHelper myDB;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +45,10 @@ public class MainActivity extends AppCompatActivity {
         searchBtn = (Button) findViewById(R.id.searchBtn);
         fetchDataTxt = (TextView) findViewById(R.id.fetchDataTxt);
         myDB = new AdminSQLiteOpenHelper(this);
-        guardadoEnDb = (TextView) findViewById(R.id.guardadoEnDb);
+        savedOnDb = (TextView) findViewById(R.id.guardadoEnDb);
         editTextComp = (EditText) findViewById(R.id.editTextComponent);
 
-        Intent intent = this.getIntent();
-
+        // Intent intent = this.getIntent();
 
         fetchDataBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,19 +63,18 @@ public class MainActivity extends AppCompatActivity {
               String fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(fecha);
 
 
-                //VARIABLES PROVISORIAS, deberian venir desde FetchData class
-                Double compra=0.01; //evidentemente el error esta en el envio de variables de una actividad a la otra
+                //VARIABLES PROVISORIAS
+                //Problemas: -no pude extraer los datos del objeto "casa" en FetchData
+                //           -tengo que volver a investigar como se envian datos con parcelable
+                Double compra=0.01;
                 Double venta=0.02;
-                //long fecha=1234;
 
 
                //Saving the received variables into a new DolarOficial object:
                 DolarOficial dolarOficial = new DolarOficial();
-                dolarOficial.setCompra(compra); //El ERROR salta aca y ES PORQUE NO LLEGAN LOS DATOS A ESTA CLASE
+                dolarOficial.setCompra(compra);
                 dolarOficial.setVenta(venta);
-              dolarOficial.setFecha(fecha1);
-
-
+                dolarOficial.setFecha(fecha1);
 
                 //Saving the new object into the database:
                Boolean saved = myDB.addDolarOficial(dolarOficial);
@@ -78,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
                } else {
                    Toast.makeText(MainActivity.this, "Error al intentar guardar", Toast.LENGTH_LONG).show();
                }
-
-
             }
         }); //first onClickListener ends
 
@@ -90,13 +93,12 @@ public class MainActivity extends AppCompatActivity {
 
              String fechaBusqueda = editTextComp.getText().toString();
 
-
                 //The following receives from the user the string "fechaBusqueda" and returns an object with the search results:
-                DolarOficial guardadoEnDb = myDB.getDolarOficial(fechaBusqueda);
+                DolarOficial savedOnDb = myDB.getDolarOficial(fechaBusqueda);
 
-                //Mostrar resultados:   //DEBERIA SER LIST VIEW
-                String texto = "Resultados de la busqueda por fecha: "+ fechaBusqueda +"\n"+ "Compra: " + guardadoEnDb.getCompra() + "\n" + "Venta: " + guardadoEnDb.getVenta();
-                MainActivity.guardadoEnDb.setText(texto);
+                //Show results:
+                String text = "Resultados de la busqueda por fecha: "+ fechaBusqueda +"\n"+ "Compra: " + savedOnDb.getCompra() + "\n" + "Venta: " + savedOnDb.getVenta();
+                MainActivity.savedOnDb.setText(text);
 
 
             }
