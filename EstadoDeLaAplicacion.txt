@@ -1,5 +1,6 @@
 
-Para los puntos 1 y 3 del ejercicio no tuve mayores problemas, y se encuentran funcionando correctamente.
+Para los puntos 1 y 3 del ejercicio no tuve mayores problemas, y se encuentran funcionando correctamente. 
+La aplicación completa se encuentra en la rama main. La rama secundaria fue creada para poder trabajar sobre puntos nuevos sin correr riesgos, aunque también realicé backups manuales.
 
 Punto 2: -Los valores son almacenados en la base de datos (use valores provisorios para poder probar el metodo)
           Verifique esto con una extension de Firefox "SQLite Manager", que recibe el archivo de la base de datos de mi aplicacion, que obtengo de Device File Explorer
